@@ -3,6 +3,7 @@ package com.example.koc.dto;
 public class CreditDto {
     private boolean isApproved;
     private Integer creditScore;
+    private Integer creditLimit;
     private UserDto userDto;
 
     public CreditDto() {
@@ -43,4 +44,11 @@ public class CreditDto {
         this.creditScore = creditScore;
     }
 
+    public Integer getCreditLimit() {
+        return creditLimit;
+    }
+
+    public void setCreditLimit(Integer creditLimit) {
+        this.creditLimit = creditLimit;
+    }
 }

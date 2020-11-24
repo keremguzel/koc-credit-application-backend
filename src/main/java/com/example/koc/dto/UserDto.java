@@ -9,8 +9,14 @@ public class UserDto {
         private Long salary;
         private Long phone;
 
+    public UserDto() {
+    }
 
-        public Long getId() {
+    public UserDto(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
             return id;
         }
 

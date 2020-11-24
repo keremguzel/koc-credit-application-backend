@@ -23,7 +23,6 @@ public class UserController {
     @GetMapping("/users/{id}")
     public GenericResponse getUserById(@PathVariable Long id){
         return userService.getUserById(id);
-
     }
 
 

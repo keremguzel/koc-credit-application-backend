@@ -6,9 +6,9 @@ import javax.persistence.*;
 @Table(name = "koc_credit_score")
 public class CreditScore {
 
-
     private Long id;
     private Long creditLimit;
+    private Long creditScore;
     private boolean isApproved;
 
     private User userEntity;
@@ -40,6 +40,13 @@ public class CreditScore {
         this.creditLimit = creditLimit;
     }
 
+    public Long getCreditScore() {
+        return creditScore;
+    }
+
+    public void setCreditScore(Long creditScore) {
+        this.creditScore = creditScore;
+    }
 
     @OneToOne( targetEntity = User.class,fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "koc_user")
@@ -50,4 +57,6 @@ public class CreditScore {
     public void setUser(User user) {
         this.userEntity = user;
     }
+
+
 }

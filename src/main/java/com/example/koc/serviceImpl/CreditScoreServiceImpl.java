@@ -36,23 +36,25 @@ public class CreditScoreServiceImpl implements CreditScoreService {
         Integer score = 0;
         Integer creditScore = creditScoreOperations.generateCreditScore();
 
-        if(creditScore > 500 && creditScore <1000){
+        CreditDto creditDto = new CreditDto();
+
+        if(creditScore > 500 && creditScore < 1000){
             score = 10000;
+            creditDto.setApproved(true);
         }
         else if(creditScore >= 1000){
             score = Math.toIntExact(CREDIT_CONSTANT * user.getSalary());
-        }
-        CreditDto creditDto = new CreditDto();
-        if (score>500) {
             creditDto.setApproved(true);
-        } else {
+        }
+        else {
             creditDto.setApproved(false);
         }
 
-        creditDto.setCreditScore(score);
+        creditDto.setCreditScore(creditScore);
+        creditDto.setCreditLimit(score);
         creditDto.setUserDto(user);
 
-        return  saveCreditScore(creditDto);
+        return saveCreditScore(creditDto);
     }
 
     @Override
@@ -63,18 +65,28 @@ public class CreditScoreServiceImpl implements CreditScoreService {
        CreditScore creditScore = new CreditScore();
        creditScore.setUser(userEntity);
        creditScore.setApproved(creditDto.isApproved());
-       creditScore.setCreditLimit(Long.valueOf(creditDto.getCreditScore()));
+       creditScore.setCreditLimit(Long.valueOf(creditDto.getCreditLimit()));
+       creditScore.setCreditScore(Long.valueOf(creditDto.getCreditScore()));
+
 
         creditScoreRepository.save(creditScore);
 
-        creditScoreRepository.getOne(1l);
+        /*creditScoreRepository.getOne(1l);
         GenericResponse<CreditScore> creditScoreGenericResponse = new GenericResponse("CREDIT_LIMIT_SUCCESS",creditScore);
 
-        return creditScoreGenericResponse;
+        return creditScoreGenericResponse;*/
+        return new GenericResponse("Credit Limit Success", creditScore);
     }
 
     @Override
     public CreditScore inquireCreditInfosByUser(Long id) {
+    /*
+        CreditScore creditScoreEntity = creditScoreRepository.getByUserId(id);
+
+        CreditDto creditDto = new CreditDto();
+        creditDto.setCreditScore(Math.toIntExact(creditScoreEntity.getCreditLimit()));
+        creditDto.setApproved(creditScoreEntity.isApproved());
+*/
         return creditScoreRepository.getByUserId(id);
     }
 
